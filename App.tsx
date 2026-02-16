@@ -1,32 +1,15 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [timesPressed, setTimesPressed] = useState(0);
-
-  let textLog = "";
-  if (timesPressed > 1) {
-    textLog = `${timesPressed}x onPress`;
-  } else if (timesPressed > 0) {
-    textLog = "onPress";
-  }
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        {/* OPEN MODAL PRESSABLE */}
         <Pressable
           onPress={() => {
-            setTimesPressed((c) => c + 1);
             setModalVisible(true);
           }}
           style={({ pressed }) => [
@@ -36,16 +19,11 @@ export default function App() {
         >
           {({ pressed }) => (
             <Text style={styles.openText}>
-              {pressed ? "Pressed!" : "Show modal message"}
+              {pressed ? "Opening" : "Open Modal!"}
             </Text>
           )}
         </Pressable>
 
-        <View style={styles.logBox}>
-          <Text>{textLog}</Text>
-        </View>
-
-        {/* MODAL */}
         <Modal
           animationType="slide"
           transparent
@@ -57,8 +35,7 @@ export default function App() {
         >
           <View style={styles.overlay}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>This is modal...</Text>
-
+              <Text style={styles.modalText}>Try again!</Text>
               <Pressable
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}
@@ -83,40 +60,48 @@ const styles = StyleSheet.create({
   pressable: {
     borderRadius: 8,
     padding: 12,
+    backgroundColor: "#f0f0f0",
   },
   openText: {
     fontSize: 18,
-  },
-  logBox: {
-    marginTop: 16,
-    padding: 10,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#ccc",
+    textAlign: "center",
   },
   overlay: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: "#00000033",
   },
   modalView: {
-    width: "80%",
+    margin: 20,
     backgroundColor: "white",
-    borderRadius: 10,
-    padding: 24,
+    borderRadius: 20,
+    padding: 35,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
     elevation: 5,
   },
   modalText: {
-    marginBottom: 16,
+    marginBottom: 15,
+    textAlign: "center",
     fontSize: 16,
   },
   closeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 18,
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: "#2196F3",
   },
   closeText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
     fontSize: 16,
-    fontWeight: "600",
   },
 });
+
